@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block title %}App Reviews{% endblock %}
+{% block page %}App Reviews{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+    <div class="row">
+        <p>
+            This review table is renderd on the Server. Flask gets the data from the database and uses jinja templates to dyanmically render this page when a request is sent to <a href="/reviews">/reviews</a>.
+        </p>
+    </div>
+    {% if is_authenticated %}
+    <div>
+        <p> Welcome {{current_user.username}} </p>
+    <div class="row">
+      <form class="col s12" method="POST" action="/reviews">
+        
+        <div class="row">
+          <div class="input-field col s6">
+            <input placeholder="Username" name="bookid" type="text" class="validate">
+            <label for="bookid">Book Id</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="password" name="rating" type="text" class="validate">
+            <label for="rating">Rating</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="Username" name="reviewtext" type="text" class="validate">
+            <label for="reviewtext">Review </label>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="input-field col s12">
+            <button class="btn waves-effect waves-light right purple" type="submit" name="action">Submit</button>
+          </div>
+        </div> 
+
+      </form>
+    </div>
+    </div>
+{% else %}
+<div><p> Please log in to create reviews </p>
+    </div>
+    
+{% endif %}
+    
+
+    <div class="row">
+      <table>
+        <thead>
+          <tr>
+            <th>ReviewId</th><th>Rating</th><th>ReviewText</th><th>UserId</th><th>Username</th><th>BookName</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if reviews%}
+          {% for review in reviews %}
+            <tr>
+                <td>{{review.id}}</td>
+                <td>{{review.rating}}</td>
+                <td>{{review.reviewtext}}</td>
+                <td>{{review.user_id}}</td>
+                <td>{{review.user_name}}</td>
+                <td>{{review.book_name}}</td>
+                
+            </tr>
+          {% endfor %}
+          {% endif %}
+        <tbody>
+      </table>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+<script>
+            let state = [];
+          
+            function drawTable(records){
+              let html='';
+              let result = document.querySelector('#result tbody');
+          
+              for(let rec of records){
+                html+=`<tr>
+                  <td>${rec.character}</td>
+                  <td>${rec.gameSeries}</td>
+                  <td>
+                    <img src="${rec.image}" alt="${rec.character}">
+                  </td>
+                  <td>
+                    ${rec.release.na}
+                  </td>
+                  <td>
+                    <button onclick="viewDetails('${rec.head}', '${rec.tail}')">View Details</button>
+                  </td>
+                </tr>`;
+              }
+          
+              result.innerHTML = html;
+            }
+          
+            async function getData(){
+              const response = await fetch('https://amiiboapi.com/api/amiibo/?showusage');
+              const data = await response.json();
+              console.log(data)
+              return data.amiibo.slice(0, 100);//gets first 100 items (too much data)
+            }
+          
+            async function showAllGames(){
+                state = await getData();
+                drawTable(state);
+            }
+          
+            showAllGames();
+          </script>

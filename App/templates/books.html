@@ -1,0 +1,198 @@
+{% extends "layout.html" %}
+{% block title %}App Books{% endblock %}
+{% block page %}App Books{% endblock %}
+
+{{ super() }}
+{% block styles %}
+
+    * {
+        box-sizing: border-box;
+      }
+    aside{
+        display: flex;
+        flex-grow: 2;
+        background-color: white;
+        flex-direction: column;
+  }
+  td{
+    padding: 2px;
+}
+.form-row {
+    display: flex;
+    align-items: center;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  width: 300px;
+  height: 400px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.card-author,
+.card-publisher {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+  {% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <p>
+            This book table is renderd on the Server. Flask gets the data from the database and uses jinja templates to dyanmically render this page when a request is sent to <a href="/books">/books</a>.
+        </p>
+    </div>
+    {% if is_authenticated %}
+    <div><p> Welcome {{current_user.username}} </p>
+    <div class="row">
+      <form class="col s12" method="POST" action="/books">
+        
+        <div class="row">
+          <div class="input-field col s6">
+            <input placeholder="Bookname" name="bookname" type="text" class="validate">
+            <label for="bookname">Book name</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="author" name="author" type="text" class="validate">
+            <label for="author">Author</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="publisher" name="author" type="text" class="validate">
+            <label for="publisher">Publisher</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="cover" name="cover" type="text" class="validate">
+            <label for="cover">Cover Image Link</label>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="input-field col s12">
+            <button class="btn waves-effect waves-light right purple" type="submit" name="action">Submit</button>
+          </div>
+        </div> 
+
+      </form>
+    </div></div>
+    
+{% else %}
+<div><p> Please log in to create books. </p>
+    </div>
+    
+{% endif %}
+    
+
+    <div class="row">
+      <!--<table>
+        <thead>
+          <tr>
+            <th>Id</th><th>Bookname</th>
+            <th>Author</th>
+      <th>Publisher</th>
+      <th>Average Rating</th>
+      <th>Reviews Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if books %}
+          {% for book in books %}
+            <tr>
+                <td>{{book.id}}</td>
+                <td>{{book.name}}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.publisher}}</td>
+               
+            </tr>
+            {% if is_authenticated %}
+            <tr>
+                <td>
+                   
+                   </td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+          {% endif %}
+        <tbody>
+      </table>-->
+      <div class="card-container">
+        {% if books %}
+        {% for book in books %}
+          <div class="card">
+            <div class="card-image">
+              <img src="{{ book.cover }}" alt="{{ book.name }}" width="500" height="300">
+            </div>
+            <div class="row">
+              <div class="card-content">
+                <h2 class="card-title">{{ book.name }}</h2>
+                <p class="card-author">{{ book.author }}</p>
+                <p class="card-publisher">{{ book.publisher }}</p>
+              </div>
+              
+            </div>
+            
+          </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+      <aside>
+        {% if reviews %}
+        <div class="row">
+
+        {%for review in reviews%}
+        <p>{{review.user_id}}</p>
+        <p>{{review.book_name}}</p>
+        <p>{{review.rating}}</p>
+        <p>{{review.reviewtext}}</p>
+          
+        {% endfor %}
+        </div>
+        {% if is_authenticated %}
+              <form class="form-row" method="GET" action="/reviews/{{book.id}}" id="makeReview">
+                <input type="radio" id="option1" name="rating" value="option1">
+                <label for="option1"> 1</label><br>
+                <input type="radio" id="option2" name="rating" value="option2">
+                <label for="option2"> 2</label><br>
+                <input type="radio" id="option3" name="rating" value="option3">
+                <label for="option3"> 3</label><br> 
+                <div class="input-field col s6">
+                    <input placeholder="reviewtext" name="reviewtext" type="text" class="validate">
+                    <label for="reviewtext">Review Text</label>
+                </div>
+            
+                <input class="" type="submit"  value="Review">
+              </form>
+              {% endif %}
+        {% endif %}
+      </aside>
+    </div>
+
+{% endblock %}
