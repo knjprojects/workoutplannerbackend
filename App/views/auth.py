@@ -26,19 +26,28 @@ def identify_page():
 
 @auth_views.route('/login', methods=['POST'])
 def login_action():
-    data = request.form
-    token = login(data['username'], data['password'])
-    """response = redirect(url_for('index_views.index_page'))#redirect(request.referrer)
-    if not token:
-        flash('Bad username or password given'), 401
-    else:
-        flash('Login Successful')
-        set_access_cookies(response, token) 
-    return response"""
-    if not token: 
-       return jsonify(success=0,user='None')
-    user=get_user_by_username(data['username'])
-    return jsonify(success=1,user=user)
+    try:
+        data = request.form
+        token = login(data['username'], data['password'])
+        """response = redirect(url_for('index_views.index_page'))#redirect(request.referrer)
+        if not token:
+            flash('Bad username or password given'), 401
+        else:
+            flash('Login Successful')
+            set_access_cookies(response, token) 
+        return response"""
+        if not token: 
+            return jsonify(success=0,user={})
+        user=get_user_by_username(data['username'])
+        if user is None:
+            return jsonify(success=0, user={}), 404
+        return jsonify(success=1,user=user)
+    except KeyError as e:
+        return jsonify(success=0, error=str(e)), 400
+
+    except Exception as e:
+        return jsonify(success=0, error=str(e)), 500
+
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():

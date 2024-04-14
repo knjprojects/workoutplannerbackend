@@ -1,3 +1,4 @@
+from flask import jsonify
 from App.models import User
 from App.database import db
 
@@ -8,7 +9,7 @@ def create_user(username, password):
     return newuser
 
 def get_user_by_username(username):
-    return User.query.filter_by(username=username).first()
+    return jsonify(User.query.filter_by(username=username).first())
 
 def get_user(id):
     return User.query.get(id)
