@@ -42,7 +42,8 @@ def login_action():
         if user is None:
             return jsonify(success=0, user={}), 404
         #return jsonify(success=1,user=user)
-        return redirect('https://workoutplanner-fy14tct1t-joshthereactdevgmailcoms-projects.vercel.app/dashboard', code=307)
+        #return redirect('https://workoutplanner-fy14tct1t-joshthereactdevgmailcoms-projects.vercel.app/dashboard', code=307)
+        return redirect('http://localhost:3000/dashboard', code=307)
     except KeyError as e:
         return jsonify(success=0, error=str(e)), 400
 
