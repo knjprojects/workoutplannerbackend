@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
-from App.controllers import get_all_users
+from App.controllers import get_all_users, get_user_by_username
 from.index import index_views,index_page
 
 from App.controllers import (
@@ -28,13 +28,17 @@ def identify_page():
 def login_action():
     data = request.form
     token = login(data['username'], data['password'])
-    response = redirect(url_for('index_views.index_page'))#redirect(request.referrer)
+    """response = redirect(url_for('index_views.index_page'))#redirect(request.referrer)
     if not token:
         flash('Bad username or password given'), 401
     else:
         flash('Login Successful')
         set_access_cookies(response, token) 
-    return response
+    return response"""
+    if not token: 
+       return jsonify(success=0,user='None')
+    user=get_user_by_username(data['username'])
+    return jsonify(success=1,user=user)
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
