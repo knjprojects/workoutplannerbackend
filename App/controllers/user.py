@@ -9,7 +9,9 @@ def create_user(username, password):
     return newuser
 
 def get_user_by_username(username):
-    return jsonify(User.query.filter_by(username=username).first())
+    usa=User.query.filter_by(username=username).first()
+    user=usa.get_json()
+    return jsonify(user)
 
 def get_user(id):
     return User.query.get(id)
