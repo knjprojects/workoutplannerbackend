@@ -37,18 +37,18 @@ def login_action():
             set_access_cookies(response, token) 
         return response"""
         if not token: 
-            return jsonify(success=0,user={})
+            return jsonify(user={})
         user=get_user_by_username(data['username'])
         if user is None:
-            return jsonify(success=0, user={}), 404
-        return jsonify(success=1,user=user)
+            return jsonify(user={}), 404
+        return jsonify(user=user)
         #return redirect('https://workoutplanner-fy14tct1t-joshthereactdevgmailcoms-projects.vercel.app/dashboard', code=307)
         #return redirect('http://localhost:3000/dashboard', code=307)
     except KeyError as e:
-        return jsonify(success=0, error=str(e)), 400
+        return jsonify(error=str(e)), 400
 
     except Exception as e:
-        return jsonify(success=0, error=str(e)), 500
+        return jsonify(error=str(e)), 500
 
 
 @auth_views.route('/logout', methods=['GET'])
