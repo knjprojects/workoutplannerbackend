@@ -37,10 +37,10 @@ def login_action():
             set_access_cookies(response, token) 
         return response"""
         if not token: 
-            return jsonify(user={})
+            return jsonify({})
         user=get_user_by_username(data['username'])
         if user is None:
-            return jsonify(user={}), 404
+            return jsonify({}), 404
         return jsonify(user)
         #return redirect('https://workoutplanner-fy14tct1t-joshthereactdevgmailcoms-projects.vercel.app/dashboard', code=307)
         #return redirect('http://localhost:3000/dashboard', code=307)
