@@ -60,11 +60,26 @@ def logout_action():
 
 @auth_views.route('/signup', methods=['POST'])
 def signup_action():
-  data = request.form  # get data from form submission
-  response=None
-  usa=signUpUser(data['username'], data['password'])
-  token = login(data['username'], data['password'])
-  if token:
+  try:
+    data = request.form  # get data from form submission
+    response=None
+    usa=signUpUser(data['username'], data['password'])
+    token = login(data['username'], data['password'])
+    if not token: 
+        return jsonify({})
+    user=get_user_by_username(data['username'])
+    if user is None:
+        return jsonify({}), 404
+    return jsonify(user)
+        #return redirect('https://workoutplanner-fy14tct1t-joshthereactdevgmailcoms-projects.vercel.app/dashboard', code=307)
+        #return redirect('http://localhost:3000/dashboard', code=307)
+  except KeyError as e:
+    return jsonify(error=str(e)), 400
+
+  except Exception as e:
+    return jsonify(error=str(e)), 500
+
+  """if token:
     response=redirect(url_for('book_views.get_book_page'))
     set_access_cookies(response, token)
     flash('Account Created!')  # send message
@@ -72,7 +87,7 @@ def signup_action():
      
      response = redirect(url_for('index_views.index_page'))
      flash("username or email already exists") 
-  return response
+  return response"""
   
 '''
 API Routes
