@@ -7,6 +7,7 @@ from App.controllers import (
     create_user,
     get_all_users,
     get_all_users_json,
+    delete_user,
     jwt_required
 )
 
@@ -17,6 +18,7 @@ def get_user_page():
     users = get_all_users()
     return render_template('users.html', users=users)
 
+#sign up action is found inn auth views
 @user_views.route('/users', methods=['POST'])
 def create_user_action():
     data = request.form
@@ -28,6 +30,16 @@ def create_user_action():
 def get_users_action():
     users = get_all_users_json()
     return jsonify(users)
+
+
+@user_views.route('/api/users/delete', methods=['POST'])
+def delete_user_action():
+    data=request.form
+    response=delete_user(data['username'])
+    if response:
+        return jsonify({"deleted":data['username']}), 200
+    return jsonify({"deleted": "none"}), 404
+
 
 @user_views.route('/api/users', methods=['POST'])
 def create_user_endpoint():

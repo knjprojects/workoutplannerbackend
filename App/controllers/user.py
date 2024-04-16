@@ -4,9 +4,15 @@ from App.database import db
 
 def create_user(username, password):
     newuser = User(username=username, password=password)
-    db.session.add(newuser)
-    db.session.commit()
-    return newuser
+    try:
+        db.session.add(newuser)
+        db.session.commit()  # save user
+        return newuser
+        
+    except Exception:  # attempted to insert a duplicate user
+        db.session.rollback()
+        # error message
+    return None
 
 def get_user_by_username(username):
     usa=User.query.filter_by(username=username).first()
@@ -26,7 +32,7 @@ def get_all_users_json():
     users = [user.get_json() for user in users]
     return users
 
-
+##delete this unused copy method
 def signUpUser(username,password):
     newuser = create_user(username=username,
                       
@@ -41,3 +47,14 @@ def signUpUser(username,password):
         db.session.rollback()
         # error message
     return None
+
+def delete_user( username):
+    user =get_user_by_username(username)
+    if user:
+      try:
+        db.session.delete(user)
+        db.session.commit()
+        return True
+      except Exception:  # database error
+        db.session.rollback()
+    return None # user does not exist
