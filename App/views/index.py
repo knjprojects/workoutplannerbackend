@@ -19,7 +19,7 @@ def init():
 
     #bob=create_user('bob', 'bobpass')
     #create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
-    b#ob.review_book(1, 3,'A great book!')
+    #bob.review_book(1, 3,'A great book!')
     return jsonify(message='db initialized!')
 
 @index_views.route('/health', methods=['GET'])
