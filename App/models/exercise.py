@@ -2,7 +2,7 @@ from App.database import db
 class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100),nullable=False)
-    description = db.Column(db.Sring(255),nullable=False)
+    description = db.Column(db.String(255),nullable=False)
     muscle = db.Column(db.String(50),nullable=False)
     equipment = db.Column(db.String(100),nullable=False)
     difficulty = db.Column(db.String(50),nullable=False)
