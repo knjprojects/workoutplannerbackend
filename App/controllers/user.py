@@ -45,5 +45,4 @@ def delete_user( username):
 
 def create_test_users():#,bobpass,200,"['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']"
     user1 = create_user(username='user1', email='user1@example.com', password='password1',budget=200,prefs="['Meat', 'Veggies']", fgoals="['Weight Loss', 'Building Muscle']",gender='male',age=21,weight=120)
-    db.session.add(user1)
-    db.session.commit()
+    return user1
