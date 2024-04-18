@@ -11,7 +11,7 @@ def loadExercises():
             db.session.add(exercise)
     db.session.commit()
 
-def list_foods():
+def list_exercises():
     exercises=Exercise.query.all()
     if not exercises:
         return []
