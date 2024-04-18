@@ -3,7 +3,7 @@ from App.models import User
 from App.database import db
 
 def create_user(username, password,email, budget, prefs, fgoals,gender,age,weight):
-    newuser = User(username=username, password=password,email=email,budget=budget,prefs=prefs,goals=goals,gender=gender,age=age,weight=weight)
+    newuser = User(username=username, password=password,email=email,budget=budget,prefs=prefs,fgoals=fgoals,gender=gender,age=age,weight=weight)
     try:
         db.session.add(newuser)
         db.session.commit()  # save user
