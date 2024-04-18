@@ -4,7 +4,7 @@ from App.controllers import get_all_users, get_user_by_username
 from.index import index_views,index_page
 
 from App.controllers import (
-    login,signUpUser
+    login,create_user
 )
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
@@ -63,7 +63,7 @@ def signup_action():
   try:
     data = request.form  # get data from form submission
     response=None
-    usa=signUpUser(data['username'], data['password'])
+    usa=create_user(data['username'], data['password'])
     token = login(data['username'], data['password'])
     if not token: 
         return jsonify({})
