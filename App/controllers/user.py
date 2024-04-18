@@ -2,8 +2,8 @@ from flask import jsonify
 from App.models import User
 from App.database import db
 
-def create_user(username, password):
-    newuser = User(username=username, password=password)
+def create_user(username, password,email, budget, prefs, goals,gender,age,weight):
+    newuser = User(username=username, password=password,email=email,budget=budget,prefs=prefs,goals=goals,gender=gender,age=age,weight=weight)
     try:
         db.session.add(newuser)
         db.session.commit()  # save user
@@ -32,22 +32,6 @@ def get_all_users_json():
     users = [user.get_json() for user in users]
     return users
 
-##delete this unused copy method
-def signUpUser(username,password):
-    newuser = create_user(username=username,
-                      
-                        password=password)  # create user object
-    
-    try:
-        db.session.add(newuser)
-        db.session.commit()  # save user
-        return newuser
-        
-    except Exception:  # attempted to insert a duplicate user
-        db.session.rollback()
-        # error message
-    return None
-
 def delete_user( username):
     user =get_user_by_username(username)
     if user:
@@ -58,3 +42,8 @@ def delete_user( username):
       except Exception:  # database error
         db.session.rollback()
     return None # user does not exist
+
+def create_test_users():#,bobpass,200,"['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']"
+    user1 = create_user(username='user1', email='user1@example.com', password='password1',budget=200,prefs="['Meat', 'Veggies']", fgoals="['Weight Loss', 'Building Muscle']",gender='male',age=21,weight=120)
+    db.session.add(user1)
+    db.session.commit()

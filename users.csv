@@ -1,0 +1,3 @@
+username,email,password,budget,prefs,goals,gender,age,weight
+bob,bob@gmail.com,bobpass,200,"['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']"
+jake,jake@gmail.com,jakepass,200,"['Dairy', 'Fruits']","['Endurance', 'Speed']"

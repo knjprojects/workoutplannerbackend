@@ -4,18 +4,50 @@ from App.database import db
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username =  db.Column(db.String, nullable=False, unique=True)
+    email =  db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False)
+    gender = db.Column(db.String(120), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    weight= db.Column(db.Integer, nullable=False)
     review = db.relationship('Review', backref='user',lazy=True)
+    image=db.Column(db.String(25))
 
+    budget=db.Column(db.Integer, nullable=False)
 
-    def __init__(self, username, password):
+    prefs = db.Column(db.String(50))  # Example: Vegetarian, Vegan, Gluten-free
+    fgoals = db.Column(db.String(50))  # Example: Weight loss, Muscle gain, Maintenance
+    routines = db.relationship('Routine', backref='user', lazy=True)
+    
+    meals = db.relationship('Meal', backref='user', lazy=True)
+    calendar_integrations = db.relationship('CalendarIntegration', backref='user', lazy=True)
+
+    def __init__(self, username,email, password,prefs,fgoals, budget,gender, age, weight):
         self.username = username
+        self.email=email
+        self.prefs=prefs
+        self.fgoals=fgoals
+        self.budget=budget
+        self.gender=gender
+        self.age=age
+        self.weight=weight
+        self.image=""
         self.set_password(password)
 
     def get_json(self):
         return{
             'id': self.id,
-            'username': self.username
+            'username': self.username,
+            'email':self.email,
+            'budget':self.budget,
+            'gender':self.gender,
+            'weight':self.weight,
+            'age':self.age,
+            'image':self.image,
+            'prefs':self.prefs,
+            'fgoals': self.fgoals,
+            'routines': self.routines,
+            'meals':self.meals,
+            'calendar':self.calendar_integrations
         }
 
     def set_password(self, password):
@@ -26,12 +58,24 @@ class User(db.Model):
         """Check hashed password."""
         return check_password_hash(self.password, password)
 
-    def update_user(self, username):
+    def update_user_basic(self, username,email,image):
         self.username = username
+        self.image=image
+        self.email=email
+        
         db.session.add(self)
         db.session.commit()
         return self
-        return None
+    def update_user_sensitive(self,budget,weight,prefs,fgoals, age):
+        self.budget=budget
+        self.weight=weight
+        self.prefs=prefs
+        self.fgoals=fgoals
+        self.age=age
+        db.session.add(self)
+        db.session.commit()
+        return self
+        
     # to svoifd circular import issue on render, im importing it using a lazy import instead top of the file
     def review_book(self, book_id, rating, reviewtext):
         from App.models import Book

@@ -18,8 +18,9 @@ def index_page():
 def init():
     db.drop_all()
     db.create_all()
+
     bob=create_user('bob', 'bobpass')
-    create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
+    #create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
     bob.review_book(1, 3,'A great book!')
     return jsonify(message='db initialized!')
 
