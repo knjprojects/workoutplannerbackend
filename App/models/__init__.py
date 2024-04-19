@@ -7,6 +7,5 @@ from .routine import *
 from .exerciseroutine import *
 from .meal import *
 from .mealcalendar import *
-from .mealfooditem import *
 from .routinecalendar import *
 from .calendarintegration import *
