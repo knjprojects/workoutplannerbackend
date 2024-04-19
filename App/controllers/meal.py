@@ -13,7 +13,7 @@ def createMeal(user_id,food_id):
                 db.session.rollback()
                 return None
     
-def loadMeals():
+def getMeals():
     meals=Meal.query.all()
     if not meals:
             return []
