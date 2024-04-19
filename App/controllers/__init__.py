@@ -6,3 +6,4 @@ from .food import *
 from .exercise import *
 from .routineexercise import *
 from .routine import *
+from .meal import *
