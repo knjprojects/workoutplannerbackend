@@ -1,5 +1,5 @@
 from App.database import db
-from App.models import Routine, Exercise, User, ExerciseRoutine
+from App.models import ExerciseRoutine
 
 """def test_routine_exercise_relationship():
     user = User.query.get(1)

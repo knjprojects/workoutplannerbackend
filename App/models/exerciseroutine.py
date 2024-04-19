@@ -1,4 +1,3 @@
-#__tablename__ = 'user_pokemon'
 from App.database import db
 class ExerciseRoutine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
