@@ -18,3 +18,7 @@ class CalendarIntegration(db.Model):
             'routines': [routine_calendar.get_json() for routine_calendar in self.routines],
             'meals': [meal_calendar.get_json() for meal_calendar in self.meals]
         }
+
+    
+
+    
