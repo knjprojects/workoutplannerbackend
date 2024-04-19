@@ -5,3 +5,4 @@ from .review import *
 from .food import *
 from .exercise import *
 from .routineexercise import *
+from .routine import *

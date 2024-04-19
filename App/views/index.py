@@ -1,8 +1,8 @@
 import csv
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.database import db
-from App.controllers import create_user,create_test_users
-from App.controllers import login, create_book, create_review,loadExercises,list_exercises
+from App.controllers import create_user,create_test_users, createRoutine
+from App.controllers import login, create_book, create_review,loadExercises,list_exercises,list_routines,get_user_routines
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
 @index_views.route('/', methods=['GET'])
@@ -13,7 +13,9 @@ def index_page():
     create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
     if user1:
         user1.review_book(1, 3,'A great book!')
-        #prefs="['Meat', 'Veggies']", fgoals="['Weight Loss', 'Building Muscle']"
+        userid=user1.id
+        createRoutine(1, 'Abs Workout', 'I want to build abs', ['Meat', 'Veggies'],['Weight Loss', 'Building Muscle'])
+        #prefs="", fgoals=""
     loadExercises()
     
     
@@ -29,10 +31,22 @@ def init():
     user1.review_book(1, 3,'A great book!')
     return jsonify(message='db initialized!')
 
-
+# list all exercises
 @index_views.route('/exercises', methods=['GET'])
 def exercises():
     return jsonify(list_exercises())
+#
+
+
+
+#list all user's routines, should have one listing routines for a specific user
+@index_views.route('/routines', methods=['GET'])
+def routines():
+    return jsonify(list_routines())
+
+@index_views.route('/routines/<int:user_id>', methods=['GET'])
+def user_routines(user_id):
+    return jsonify(get_user_routines(user_id=user_id))
 
 @index_views.route('/health', methods=['GET'])
 def health_check():
