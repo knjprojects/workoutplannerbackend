@@ -21,7 +21,7 @@ def list_routines():
     return routines_list
 
 def get_user_routines(user_id):
-       routines=Routine.query.filterby(user_id=user_id).all()
+       routines=Routine.query.filter_by(user_id=user_id).all()
        if not routines:
         return []
        routines_list = [routine.get_json() for routine in routines]
