@@ -25,3 +25,5 @@ class Routine(db.Model):
             'fgoals':self.fgoals,
             'exercises': [exercise_routine.get_json() for exercise_routine in self.exercises]
         }
+
+    
