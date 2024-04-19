@@ -18,6 +18,11 @@ def list_foods():
     foods_list = [food.get_json() for food in foods]
     return foods_list
 
+def getFoodById(foodid):
+    food=FoodItem.query.filter_by(id=foodid).first()
+    if not food:
+        return None
+    return food.get_json()
 
 
     

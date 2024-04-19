@@ -7,3 +7,4 @@ from .exercise import *
 from .routineexercise import *
 from .routine import *
 from .meal import *
+from .calendar import *

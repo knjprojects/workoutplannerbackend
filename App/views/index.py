@@ -1,7 +1,7 @@
 import csv
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.database import db
-from App.controllers import create_user,create_test_users, createRoutine,createMeal,getMeals,mealsForUser
+from App.controllers import create_user,create_test_users, createRoutine,createMeal,getMeals,mealsForUser,getFoodById
 from App.controllers import login, create_book, create_review,loadExercises,loadFoods,list_foods,list_exercises,list_routines,get_user_routines
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
@@ -35,6 +35,7 @@ def init():
         #userid=user1.id
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         createMeal(user1.id,1)
+
         #prefs="", fgoals=""
     loadExercises()
     loadFoods()
@@ -51,7 +52,10 @@ def foods():
     return jsonify(list_foods())
 #
 
-
+@index_views.route('/foods<int:food_id>', methods=['GET'])
+def foodsById(food_id):
+    return jsonify(getFoodById(foodid=food_id))
+#
 
 #list all users routines, should have one listing routines for a specific user
 @index_views.route('/routines', methods=['GET'])
@@ -70,6 +74,12 @@ def meals():
 @index_views.route('/meals/<int:user_id>', methods=['GET'])
 def user_meals(user_id):
     return jsonify(mealsForUser(user_id=user_id))
+
+
+@index_views.route('/calendars/<int:user_id>', methods=['GET'])
+def user_calendars():
+    return jsonify(getMeals())
+
 
 @index_views.route('/health', methods=['GET'])
 def health_check():
