@@ -14,7 +14,7 @@ def index_page():
     if user1:
         user1.review_book(1, 3,'A great book!')
         #userid=user1.id
-        createRoutine(user1.id, 'Abs Workout', 'I want to build abs', ['Meat', 'Veggies'],['Weight Loss', 'Building Muscle'])
+        createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         #prefs="", fgoals=""
     loadExercises()
     
