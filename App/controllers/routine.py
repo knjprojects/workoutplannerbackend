@@ -4,7 +4,9 @@ from App.database import db
 def createRoutine(user_id,routinename,description, prefs, fgoals):
     try:
                 
-                routine=Routine(name=routinename,description=description,prefs=prefs,fgoals=fgoals,user_id=user_id)
+                routine=Routine(user_id=user_id,name=routinename,description=description,prefs=prefs,fgoals=fgoals)
+                db.session.add(routine)
+                db.session.commit()
                 return routine
     except Exception as e:
                 print(e)
