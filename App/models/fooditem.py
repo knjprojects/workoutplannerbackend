@@ -11,6 +11,7 @@ class FoodItem(db.Model):
     calories = db.Column(db.Integer, nullable=False)
     dietrestrict = db.Column(db.String(100),nullable=False)#vegetarian, "vegan "gluten free
     image=db.Column(db.String(255),nullable=False)
+    meals = db.relationship('Meal', backref='food_item', lazy=True)
 
     def __init__(self, name, description, ingredients, protein, carbs, fat, calories, dietrestrict, image):
         self.name = name
@@ -34,6 +35,7 @@ class FoodItem(db.Model):
             'fat': self.fat,
             'calories': self.calories,
             'dietrestrict':self.dietrestrict,
-            'image': self.image
+            'image': self.image,
+            'meals': [meal.get_json() for meal in self.meals]
         }
 

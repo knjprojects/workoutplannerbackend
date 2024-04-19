@@ -16,14 +16,13 @@ class User(db.Model):
 
     
     routines = db.relationship('Routine', backref='user', lazy=True)
-    
     meals = db.relationship('Meal', backref='user', lazy=True)
+    #calendar_integrations = db.relationship('CalendarIntegration', backref='user', lazy=True)
+    meal_calendars = db.relationship('MealCalendar', backref='user', lazy=True)
     calendar_integrations = db.relationship('CalendarIntegration', backref='user', lazy=True)
-
     def __init__(self, username,email, password, budget,gender, age, weight):
         self.username = username
         self.email=email
-        
         self.budget=budget
         self.gender=gender
         self.age=age
@@ -41,8 +40,10 @@ class User(db.Model):
             'weight':self.weight,
             'age':self.age,
             'image':self.image,
-            'routines':  [routine.get_json() for routine in self.routines],
             'meals': [meal.get_json() for meal in self.meals],
+            'meal_calendars': [meal_calendar.get_json() for meal_calendar in self.meal_calendars],
+            'calendar_integrations': [calendar_integration.get_json() for calendar_integration in self.calendar_integrations],
+            'routines': [routine.get_json() for routine in self.routines]
             #'calendar':self.calendar_integrations
         }
 

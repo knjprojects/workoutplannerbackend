@@ -7,6 +7,7 @@ class Exercise(db.Model):
     equipment = db.Column(db.String(100),nullable=False)
     difficulty = db.Column(db.String(50),nullable=False)
     image = db.Column(db.String(200),nullable=False)
+    routines = db.relationship('RoutineExercise', backref='exercise', lazy=True)
 
     def __init__(self, name, description, muscle, equipment, difficulty, image):
         self.name = name
@@ -24,5 +25,6 @@ class Exercise(db.Model):
             'muscle': self.muscle,
             'equipment': self.equipment,
             'difficulty': self.difficulty,
-            'image': self.image
+            'image': self.image,
+            'routines': [routine_exercise.get_json() for routine_exercise in self.routines]
         }
