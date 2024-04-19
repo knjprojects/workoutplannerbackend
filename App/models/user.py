@@ -41,9 +41,9 @@ class User(db.Model):
             'weight':self.weight,
             'age':self.age,
             'image':self.image,
-            'routines': self.routines,
-            'meals':self.meals,
-            'calendar':self.calendar_integrations
+            'routines':  [routine.get_json() for routine in self.routines],
+            'meals': [meal.get_json() for meal in self.meals],
+            #'calendar':self.calendar_integrations
         }
 
     def set_password(self, password):
