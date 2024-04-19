@@ -13,6 +13,7 @@ def index_page():
     create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
     if user1:
         user1.review_book(1, 3,'A great book!')
+        #prefs="['Meat', 'Veggies']", fgoals="['Weight Loss', 'Building Muscle']"
     loadExercises()
     
     

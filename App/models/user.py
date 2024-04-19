@@ -14,18 +14,16 @@ class User(db.Model):
 
     budget=db.Column(db.Integer, nullable=False)
 
-    prefs = db.Column(db.String(50))  # Example: Vegetarian, Vegan, Gluten-free
-    fgoals = db.Column(db.String(50))  # Example: Weight loss, Muscle gain, Maintenance
+    
     routines = db.relationship('Routine', backref='user', lazy=True)
     
     meals = db.relationship('Meal', backref='user', lazy=True)
     calendar_integrations = db.relationship('CalendarIntegration', backref='user', lazy=True)
 
-    def __init__(self, username,email, password,prefs,fgoals, budget,gender, age, weight):
+    def __init__(self, username,email, password, budget,gender, age, weight):
         self.username = username
         self.email=email
-        self.prefs=prefs
-        self.fgoals=fgoals
+        
         self.budget=budget
         self.gender=gender
         self.age=age
@@ -43,8 +41,6 @@ class User(db.Model):
             'weight':self.weight,
             'age':self.age,
             'image':self.image,
-            'prefs':self.prefs,
-            'fgoals': self.fgoals,
             'routines': self.routines,
             'meals':self.meals,
             'calendar':self.calendar_integrations

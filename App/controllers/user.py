@@ -2,8 +2,8 @@ from flask import jsonify
 from App.models import User
 from App.database import db
 
-def create_user(username, password,email, budget, prefs, fgoals,gender,age,weight):
-    newuser = User(username=username, password=password,email=email,budget=budget,prefs=prefs,fgoals=fgoals,gender=gender,age=age,weight=weight)
+def create_user(username, password,email, budget,gender,age,weight):
+    newuser = User(username=username, password=password,email=email,budget=budget,gender=gender,age=age,weight=weight)
     try:
         db.session.add(newuser)
         db.session.commit()  # save user
@@ -44,5 +44,5 @@ def delete_user( username):
     return None # user does not exist
 
 def create_test_users():#,bobpass,200,"['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']"
-    user1 = create_user(username='user1', email='user1@example.com', password='password1',budget=200,prefs="['Meat', 'Veggies']", fgoals="['Weight Loss', 'Building Muscle']",gender='male',age=21,weight=120)
+    user1 = create_user(username='user1', email='user1@example.com', password='password1',budget=200,gender='male',age=21,weight=120)
     return user1
