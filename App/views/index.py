@@ -35,6 +35,7 @@ def init():
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         #prefs="", fgoals=""
     loadExercises()
+    loadFoods()
     return jsonify(message='db initialized!')
 
 # list all exercises
