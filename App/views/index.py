@@ -2,7 +2,7 @@ import csv
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.database import db
 from App.controllers import create_user,create_test_users, createRoutine
-from App.controllers import login, create_book, create_review,loadExercises,list_exercises,list_routines,get_user_routines
+from App.controllers import login, create_book, create_review,loadExercises,loadFoods,list_foods,list_exercises,list_routines,get_user_routines
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
 @index_views.route('/', methods=['GET'])
@@ -17,6 +17,7 @@ def index_page():
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         #prefs="", fgoals=""
     loadExercises()
+    loadFoods()
     
     
     return render_template('index.html')
@@ -42,7 +43,10 @@ def exercises():
     return jsonify(list_exercises())
 #
 
-
+@index_views.route('/foods', methods=['GET'])
+def foods():
+    return jsonify(list_foods())
+#
 
 #list all user's routines, should have one listing routines for a specific user
 @index_views.route('/routines', methods=['GET'])
