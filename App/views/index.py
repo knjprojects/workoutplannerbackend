@@ -80,9 +80,10 @@ def user_meals(user_id):
 @index_views.route('/meals/remove', methods=['POST'])
 def remove_meal():
     data=request.form
-    removeMeal(meal_id=data['meal_id'])
-    return jsonify(message='Meal removed from user')
-
+    rem=removeMeal(meal_id=data['meal_id'])
+    if rem:
+        return jsonify(message='Meal removed from user')
+    return jsonify(message='Failed')
 
 @index_views.route('/calendars', methods=['GET'])
 def calendars():
