@@ -29,4 +29,13 @@ def mealsForUser(user_id):
         meal_list=[meal.get_json() for meal in meals]
         return meal_list
 
+def removeMeal(meal_id):
+        meal=Meal.query.filter_by(meal_id=meal_id).first()
+        try: 
+                db.session.remove(meal)
+                db.session.commit()
+        except Exception as e:
+                print(e)
+                db.session.rollback()
+                return None
 
