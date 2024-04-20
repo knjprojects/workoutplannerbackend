@@ -11,6 +11,8 @@ def index_page():
     db.create_all()
     user1=create_test_users()
     create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
+    loadExercises()
+    loadFoods()
     if user1:
         user1.review_book(1, 3,'A great book!')
         #userid=user1.id
@@ -18,9 +20,6 @@ def index_page():
         createMeal(user1.id,1)
         cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
         #prefs="", fgoals=""
-    loadExercises()
-    loadFoods()
-    
     
     return render_template('index.html')
 

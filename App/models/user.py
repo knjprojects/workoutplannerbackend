@@ -42,11 +42,11 @@ class User(db.Model):
             'weight':self.weight,
             'height':self.height,
             'age':self.age,
-            'image':self.image,
-            'meals': [meal.get_json() for meal in self.meals],
-            'meal_calendars': [meal_calendar.get_json() for meal_calendar in self.meal_calendars],
-            'calendar_integrations': [calendar_integration.get_json() for calendar_integration in self.calendar_integrations],
-            'routines': [routine.get_json() for routine in self.routines]
+            'image':self.image
+            #'meals': [meal.get_json() for meal in self.meals],
+            #'meal_calendars': [meal_calendar.get_json() for meal_calendar in self.meal_calendars],
+            #'calendar_integrations': [calendar_integration.get_json() for calendar_integration in self.calendar_integrations],
+            #'routines': [routine.get_json() for routine in self.routines]
             #'calendar':self.calendar_integrations
         }
 
