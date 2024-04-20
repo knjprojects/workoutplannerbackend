@@ -82,8 +82,6 @@ def calendars():
     cals=list_cals()
     return jsonify(cals)
 
-
-
 @index_views.route('/calendars/<int:user_id>', methods=['GET'])
 def user_calendars(user_id):
     usercals=get_user_calendars(userid=user_id)
