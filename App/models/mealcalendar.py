@@ -20,6 +20,6 @@ class MealCalendar(db.Model):
             'date': self.date,
             'user_id': self.user_id,
             'meal_id': self.meal_id,
-            'calendar_integration_id': self.calendar_integration_id,
-            'meal': self.meal.get_json()
+            'calendar_integration_id': self.calendar_integration_id
+            #'meal': self.meal.get_json()
         }
