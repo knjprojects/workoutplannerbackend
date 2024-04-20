@@ -44,5 +44,5 @@ def delete_user( username):
     return None # user does not exist
 
 def create_test_users():#,bobpass,200,"['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']"
-    user1 = create_user(username='bob', email='bob@example.com', password='bobpass',budget=200,gender='male',age=21,weight=120)
+    user1 = create_user(username='bob', email='bob@example.com', password='bobpass',budget=200,gender='male',age=21,weight=120,height='1.8796')
     return user1

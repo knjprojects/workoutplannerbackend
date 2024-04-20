@@ -9,6 +9,7 @@ class User(db.Model):
     gender = db.Column(db.String(120), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     weight= db.Column(db.Integer, nullable=False)
+    height= db.Column(db.String(100), nullable=False)
     review = db.relationship('Review', backref='user',lazy=True)
     image=db.Column(db.String(25))
 
@@ -20,7 +21,7 @@ class User(db.Model):
     #calendar_integrations = db.relationship('CalendarIntegration', backref='user', lazy=True)
     meal_calendars = db.relationship('MealCalendar', backref='user', lazy=True)
     calendar_integrations = db.relationship('CalendarIntegration', backref='user', lazy=True)
-    def __init__(self, username,email, password, budget,gender, age, weight):
+    def __init__(self, username,email, password, budget,gender, age, weight,height):
         self.username = username
         self.email=email
         self.budget=budget
@@ -28,6 +29,7 @@ class User(db.Model):
         self.age=age
         self.weight=weight
         self.image=""
+        self.height=height
         self.set_password(password)
 
     def get_json(self):
@@ -38,6 +40,7 @@ class User(db.Model):
             'budget':self.budget,
             'gender':self.gender,
             'weight':self.weight,
+            'height':self.height,
             'age':self.age,
             'image':self.image,
             'meals': [meal.get_json() for meal in self.meals],
@@ -63,10 +66,11 @@ class User(db.Model):
         db.session.add(self)
         db.session.commit()
         return self
-    def update_user_sensitive(self,budget,weight,prefs,fgoals, age):
+    def update_user_sensitive(self,budget,weight,height,prefs,fgoals, age):
         self.budget=budget
         self.weight=weight
         self.prefs=prefs
+        self.height=height
         self.fgoals=fgoals
         self.age=age
         db.session.add(self)
