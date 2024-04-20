@@ -10,6 +10,7 @@ class CalendarIntegration(db.Model):
         self.date = date
         self.user_id = user_id
         self.timezone=timezone
+        
     def get_json(self):
         return {
             'id': self.id,
