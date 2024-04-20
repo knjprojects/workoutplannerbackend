@@ -14,7 +14,7 @@ def index_page():
     if user1:
         user1.review_book(1, 3,'A great book!')
         #userid=user1.id
-        createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
+        createRoutine(user1.id, 'Abs Workout', 'I want to build abs', ['Meat', 'Veggies'],['Weight Loss', 'Building Muscle'])
         createMeal(user1.id,1)
         #cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
         #prefs="", fgoals=""
