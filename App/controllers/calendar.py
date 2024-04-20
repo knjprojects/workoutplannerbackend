@@ -26,4 +26,4 @@ def get_user_calendars(user_id):# changed all to first
         if not calendars:
                 return []
         calendars_list=[calendar.get_json for calendar in calendars]
-        return calendars.get_json()
+        return calendars_list #calendars.get_json()
