@@ -16,6 +16,7 @@ def index_page():
         #userid=user1.id
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         createMeal(user1.id,1)
+        cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
         #prefs="", fgoals=""
     loadExercises()
     loadFoods()
@@ -35,8 +36,8 @@ def init():
         #userid=user1.id
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         createMeal(user1.id,1)
-        createCalendar(date='04-12-2016',user_id=user1.id,timezone='AST')
-    
+        
+        
         #prefs="", fgoals=""
     loadExercises()
     loadFoods()
