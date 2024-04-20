@@ -16,8 +16,8 @@ class CalendarIntegration(db.Model):
             'date': self.date,
             'user_id': self.user_id,
             'timezone':self.timezone,
-            'routines': [routine_calendar.get_json() for routine_calendar in self.routines],
-            'meals': [meal_calendar.get_json() for meal_calendar in self.meals]
+            #'routines': [routine_calendar.get_json() for routine_calendar in self.routines],
+            #'meals': [meal_calendar.get_json() for meal_calendar in self.meals]
         }
 
     
