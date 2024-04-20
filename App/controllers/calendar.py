@@ -6,8 +6,8 @@ def createCalendar(date,user_id,timezone):
     try:
         db.session.add(calendar)
         db.session.commit()
-        cal=CalendarIntegration.query.filter_by(id=1).first()
-        return cal
+        #cal=CalendarIntegration.query.filter_by(user_id=user_id).first()
+        return calendar
     except Exception as e:
         print(e)
         db.session.rollback()
