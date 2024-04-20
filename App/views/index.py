@@ -19,11 +19,11 @@ def index_page():
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         meal=createMeal(user1.id,1)
         cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
-        #if cal:
-            #return jsonify(cal.get_json())
-        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=meal.id,calendar_integration_id=cal.id,date='04-12-2016.8:30')
-        if mcel:
-            return jsonify(mcel)
+        if cal:
+            return jsonify(cal.get_json())
+        #mcel=createMealCalendarEntry(user_id=user1.id,meal_id=meal.id,calendar_integration_id=cal.id,date='04-12-2016.8:30')
+        #if mcel:
+            #return jsonify(mcel)
         return jsonify(message='Did not create cal or mcel?')
         #prefs="", fgoals=""
     
