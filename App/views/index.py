@@ -1,7 +1,7 @@
 import csv
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.database import db
-from App.controllers import create_user,create_test_users, createRoutine,createMeal,getMeals,mealsForUser,getFoodById,createCalendar,get_user_calendars,createMealCalendarEntry,createRoutineCalendarEntry,list_cals,removeMeal
+from App.controllers import create_user,create_test_users, createRoutine,createMeal,getMeals,mealsForUser,getFoodById,createCalendar,get_user_calendars,createMealCalendarEntry, getMealCalendarEntryForUser,createRoutineCalendarEntry,list_cals,removeMeal
 from App.controllers import login, create_book, create_review,loadExercises,loadFoods,list_foods,list_exercises,list_routines,get_user_routines
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
@@ -17,11 +17,14 @@ def index_page():
         user1.review_book(1, 3,'A great book!')
         #userid=user1.id
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
-        createMeal(user1.id,1)
+        meal=createMeal(user1.id,1)
         cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
-        if cal:
-            return jsonify(cal.get_json())
-        return jsonify(message='Did not create cal?')
+        #if cal:
+            #return jsonify(cal.get_json())
+        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=meal.id,calendar_integration_id=cal.id,date='04-12-2016.8:30')
+        if mcel:
+            return jsonify(mcel)
+        return jsonify(message='Did not create cal or mcel?')
         #prefs="", fgoals=""
     
     #return render_template('index.html')
@@ -96,6 +99,12 @@ def calendars():
 def user_calendars(user_id):
     usercals=get_user_calendars(userid=user_id)
     return jsonify(usercals)
+
+
+@index_views.route('/mealcalendars', methods=['GET'])
+def meal_calendars():
+    mealcals=getMealCalendarEntryForUser(userid=1, date='04-12-2016.8:30',calendar_id=1)
+    return jsonify(mealcals)
 
 
 @index_views.route('/health', methods=['GET'])

@@ -20,8 +20,8 @@ def list_cals():
         calendars_list=[calendar.get_json for calendar in calendars]
         return calendars_list
             
-def get_user_calendars(userid):# changed all to first
-        calendars=CalendarIntegration.query.filter_by(user_id=userid).first()
+def get_user_calendars(user_id):# changed all to first
+        calendars=CalendarIntegration.query.filter_by(user_id=user_id).first()
         if not calendars:
                 return []
         #calendars_list=[calendar.get_json for calendar in calendars]
