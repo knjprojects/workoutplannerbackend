@@ -15,7 +15,7 @@ def createCalendar(date,user_id,timezone):
 
 
 def list_cals():
-        calendars=CalendarIntegration.query.all()
+        calendars=CalendarIntegration.query.first()
         if not calendars:
             return []
         calendars_list=[calendar.get_json for calendar in calendars]
