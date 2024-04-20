@@ -13,6 +13,15 @@ def createCalendar(date,user_id,timezone):
                 print(e)
                 db.session.rollback()
                 return None
+
+
+def list_cals():
+        calendars=CalendarIntegration.query.all()
+        if not calendars:
+            return []
+        calendars_list=[calendar.get_json for calendar in calendars]
+        return calendars_list
+            
 def get_user_calendars(userid):
         calendars=CalendarIntegration.query.filter_by(user_id=userid).all()
         if not calendars:
