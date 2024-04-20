@@ -12,7 +12,7 @@ class FoodItem(db.Model):
     calories = db.Column(db.Integer, nullable=False)
     dietrestrict = db.Column(db.String(100),nullable=False)#vegetarian, "vegan "gluten free
     image=db.Column(db.String(255),nullable=False)
-    meals = db.relationship('Meal', backref='food_item', lazy=True)
+    meal = db.relationship('Meal', backref='food_item', lazy=True)
 
     def __init__(self, name, description, ingredients, protein, carbs, fat, calories, dietrestrict, image,cost):
         self.name = name
@@ -38,7 +38,7 @@ class FoodItem(db.Model):
             'calories': self.calories,
             'dietrestrict':self.dietrestrict,
             'cost':self.cost,
-            'image': self.image,
-            'meals': [meal.get_json() for meal in self.meals]
+            'image': self.image
+            #'meals': [meal.get_json() for meal in self.meals]
         }
 

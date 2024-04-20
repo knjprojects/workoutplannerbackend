@@ -3,8 +3,9 @@ class Meal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     food_item_id = db.Column(db.Integer, db.ForeignKey('food_item.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    #food_item = db.relationship('FoodItem', backref='meals', lazy=True)
+    food_item = db.relationship('FoodItem', backref='meal', lazy=True)
+    
+   
     #backref could also be noneuser = db.relationship('User', backref='meals', lazy=True)
 
     def __init__(self, food_item_id, user_id):

@@ -43,4 +43,5 @@ def list_routine_exercise_by_routine(routine_id):
         if not rxs:
                 return None
         rxs_list=[rx.get_json() for rx in rxs]
+        return rxs_list
         
