@@ -2,8 +2,8 @@ from flask import jsonify
 from App.models import User
 from App.database import db
 
-def create_user(username, password,email, budget,gender,age,weight):
-    newuser = User(username=username, password=password,email=email,budget=budget,gender=gender,age=age,weight=weight)
+def create_user(username, password,email, budget,gender,age,weight,height):
+    newuser = User(username=username, password=password,email=email,budget=budget,gender=gender,age=age,weight=weight,height=height)
     try:
         db.session.add(newuser)
         db.session.commit()  # save user
