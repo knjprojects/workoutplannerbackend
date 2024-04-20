@@ -17,6 +17,6 @@ class Meal(db.Model):
             'id': self.id,
             'food_item_id': self.food_item_id,
             'user_id': self.user_id,
-            'food_item': self.food_item.get_json() if self.food_item else None,
-            'user': self.user.get_json() if self.user else None
+            'food_item': self.food_item.get_json(),
+            'user': self.user.get_json()
         }
