@@ -81,7 +81,7 @@ def user_meals(user_id):
 @index_views.route('/calendars/<int:user_id>', methods=['GET'])
 def user_calendars(user_id):
     usercals=get_user_calendars(userid=user_id)
-    return jsonify(usercals)
+    return usercals
 
 
 @index_views.route('/health', methods=['GET'])
