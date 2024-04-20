@@ -15,15 +15,23 @@ def createCalendar(date,user_id,timezone):
 
 
 def list_cals():
-        calendars=CalendarIntegration.query.all()
+    try:
+        calendars = CalendarIntegration.query.all()
         if not calendars:
             return []
-        calendars_list=[calendar.get_json for calendar in calendars]
+        calendars_list = [calendar.get_json() for calendar in calendars]
         return calendars_list
+    except Exception as e:
+        #logging.error(f"Error occurred in list_cals: {e}")
+        return []
             
 def get_user_calendars(user_id):# changed all to first
-        calendars=CalendarIntegration.query.filter_by(user_id=user_id).all()
+    try:
+        calendars = CalendarIntegration.query.filter_by(user_id=user_id).all()
         if not calendars:
-                return []
-        calendars_list=[calendar.get_json for calendar in calendars]
-        return calendars_list #calendars.get_json()
+            return []
+        calendars_list = [calendar.get_json() for calendar in calendars]
+        return calendars_list
+    except Exception as e:
+        #logging.error(f"Error occurred in get_user_calendars for user_id {user_id}: {e}")
+        return []
