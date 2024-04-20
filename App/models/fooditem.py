@@ -6,6 +6,7 @@ class FoodItem(db.Model):
     description = db.Column(db.String(255), nullable=False)
     ingredients = db.Column(db.String(255),nullable=False)
     protein = db.Column(db.Integer,nullable=False)
+    cost = db.Column(db.Integer, nullable=False)
     carbs = db.Column(db.Integer, nullable=False)
     fat = db.Column(db.Integer, nullable=False)
     calories = db.Column(db.Integer, nullable=False)
@@ -13,7 +14,7 @@ class FoodItem(db.Model):
     image=db.Column(db.String(255),nullable=False)
     meals = db.relationship('Meal', backref='food_item', lazy=True)
 
-    def __init__(self, name, description, ingredients, protein, carbs, fat, calories, dietrestrict, image):
+    def __init__(self, name, description, ingredients, protein, carbs, fat, calories, dietrestrict, image,cost):
         self.name = name
         self.description = description
         self.ingredients = ingredients
@@ -23,6 +24,7 @@ class FoodItem(db.Model):
         self.calories = calories
         self.dietrestrict = dietrestrict
         self.image = image
+        self.cost=cost
 
     def get_json(self):
         return {
@@ -35,6 +37,7 @@ class FoodItem(db.Model):
             'fat': self.fat,
             'calories': self.calories,
             'dietrestrict':self.dietrestrict,
+            'cost':self.cost,
             'image': self.image,
             'meals': [meal.get_json() for meal in self.meals]
         }

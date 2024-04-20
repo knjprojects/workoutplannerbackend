@@ -7,7 +7,7 @@ def loadFoods():
     with open('food.csv', newline='', encoding='utf8') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:#ingredients,protein,carbs,fat,calories,dietrestrict,image
-            food = FoodItem(name=row['name'],description=row['description'],ingredients=row['ingredients'],protein=row['protein'],carbs=row['carbs'],fat=row['fat'],calories=row['calories'], dietrestrict=row['dietrestrict'],image=row['image'])
+            food = FoodItem(name=row['name'],description=row['description'],ingredients=row['ingredients'],protein=row['protein'],carbs=row['carbs'],fat=row['fat'],calories=row['calories'], dietrestrict=row['dietrestrict'],image=row['image'],cost=row['cost'])
             db.session.add(food)
     db.session.commit()
 
