@@ -17,5 +17,5 @@ def get_user_calendars(userid):
         calendars=CalendarIntegration.query.filter_by(user_id=userid).all()
         if not calendars:
                 return []
-        #calendars_list=[calendar.get_json for calendar in calendars]
-        return calendars
+        calendars_list=[calendar.get_json for calendar in calendars]
+        return calendars_list
