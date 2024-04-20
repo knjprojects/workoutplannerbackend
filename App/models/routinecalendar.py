@@ -15,8 +15,8 @@ class RoutineCalendar(db.Model):
             'id': self.id,
             'date': self.date,
             'routine_id': self.routine_id,
-            'calendar_integration_id': self.calendar_integration_id
-            #'routine': self.routine.get_json()
+            'calendar_integration_id': self.calendar_integration_id,
+            'routine': self.routine.get_json()
         }
 
 
