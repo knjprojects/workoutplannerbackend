@@ -16,9 +16,9 @@ def createMealCalendarEntry(date, user_id, meal_id, calendar_integration_id):
                 return None
    
 def getMealCalendarEntryForUser(user_id, date, calendar_id):
-        meals=MealCalendar.query.filter_by(user_id=user_id,date=date,calendar_integration_id=calendar_id).all()
-        if not meals:
-                return []
-        meals_list=[meal.get_json for meal in meals]
-        return jsonify(meals_list)
+        meal=MealCalendar.query.filter_by(user_id=user_id,date=date,calendar_integration_id=calendar_id).first()
+        if not meal:
+                return None
+        #meals_list=[meal.get_json for meal in meals]
+        return jsonify(meal)
         

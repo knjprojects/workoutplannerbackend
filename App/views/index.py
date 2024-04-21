@@ -104,8 +104,8 @@ def user_calendars(user_id):
 
 @index_views.route('/mealcalendars', methods=['GET'])
 def meal_calendars():
-    mealcals=getMealCalendarEntryForUser(userid=1, date='04-12-2016.8:30',calendar_id=1)
-    return jsonify(mealcals)
+    mealcal=getMealCalendarEntryForUser(userid=1, date='04-12-2016.8:30',calendar_id=1)
+    return jsonify(mealcal)
 
 
 @index_views.route('/health', methods=['GET'])
