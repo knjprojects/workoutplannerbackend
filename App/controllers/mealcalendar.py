@@ -8,7 +8,7 @@ def createMealCalendarEntry(date, user_id, meal_id, calendar_integration_id):
                 db.session.add(meal_calendar)
                 db.session.commit()
                 mcel=MealCalendar.query.filter_by(user_id=user_id).first()
-                return  mcel #meal_calendar
+                return  mcel.get_json() #meal_calendar
     except Exception as e:
                 print(e)
                 db.session.rollback()
