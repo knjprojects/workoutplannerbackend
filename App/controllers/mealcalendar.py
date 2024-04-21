@@ -1,3 +1,4 @@
+from flask import jsonify
 from App.database import db
 from App.models import MealCalendar
 
@@ -19,5 +20,5 @@ def getMealCalendarEntryForUser(user_id, date, calendar_id):
         if not meals:
                 return []
         meals_list=[meal.get_json for meal in meals]
-        return meals_list
+        return jsonify(meals_list)
         
