@@ -11,7 +11,7 @@ class User(db.Model):
     weight= db.Column(db.Integer, nullable=False)
     height= db.Column(db.String(100), nullable=False)
 
-    #review = db.relationship('Review', backref='user',lazy=True)
+
 
     image=db.Column(db.String(25))
 

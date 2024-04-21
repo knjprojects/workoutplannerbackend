@@ -7,7 +7,7 @@ def createMeal(user_id,food_id):
                 
                 db.session.add(meal)
                 db.session.commit()
-                return meal
+                return meal.get_json()
     except Exception as e:
                 print(e)
                 db.session.rollback()

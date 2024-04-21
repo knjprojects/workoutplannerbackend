@@ -2,19 +2,19 @@ import csv
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.database import db
 from App.controllers import create_user,create_test_users, createRoutine,createMeal,getMeals,mealsForUser,getFoodById,createCalendar,get_user_calendars,createMealCalendarEntry, getMealCalendarEntryForUser,createRoutineCalendarEntry,list_cals,removeMeal,getAllMealCalendars,getAllRoutineCalendars
-from App.controllers import login, create_book, create_review,loadExercises,loadFoods,list_foods,list_exercises,list_routines,get_user_routines
-index_views = Blueprint('index_views', __name__, template_folder='../templates')
+from App.controllers import login,loadExercises,loadFoods,list_foods,list_exercises,list_routines,get_user_routines
+index_views = Blueprint('index_views', __name__)
 
 @index_views.route('/', methods=['GET'])
 def index_page():
     db.drop_all()
     db.create_all()
     user1=create_test_users()
-    create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
+    #create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
     loadExercises()
     loadFoods()
     if user1:
-        user1.review_book(1, 3,'A great book!')
+        #user1.review_book(1, 3,'A great book!')
         #userid=user1.id
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         meal=createMeal(user1.id,1)
@@ -41,9 +41,9 @@ def init():
     db.create_all()
     
     user1=create_test_users()
-    create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
+    #create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
     if user1:
-        user1.review_book(1, 3,'A great book!')
+        #user1.review_book(1, 3,'A great book!')
         #userid=user1.id
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         createMeal(user1.id,1)
