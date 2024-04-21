@@ -21,10 +21,10 @@ def index_page():
         cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
         if cal:
             cal2=createCalendar(date='04-12-2016.8:31',user_id=user1.id,timezone='AST')
-            return jsonify(cal2.get_json())
-        #mcel=createMealCalendarEntry(user_id=user1.id,meal_id=meal.id,calendar_integration_id=cal.id,date='04-12-2016.8:30')
-        #if mcel:
-            #return jsonify(mcel)
+            #return jsonify(cal2.get_json())
+        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=meal.id,calendar_integration_id=cal.id,date='04-12-2016.8:30')
+        if mcel:
+            return jsonify(mcel)
         return jsonify(message='Did not create cal or mcel?')
         #prefs="", fgoals=""
     
