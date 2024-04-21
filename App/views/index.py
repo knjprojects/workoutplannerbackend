@@ -24,7 +24,7 @@ def index_page():
         mcel=createMealCalendarEntry(user_id=user1.id,meal_id=meal.id,calendar_integration_id=cal.id,date='04-12-2016.8:30')
         user2=create_user(username='jake', email='jake@example.com', password='jakepass',budget=300,gender='female',age=30,weight=200,height="1.564")
         if user2:
-            cal2=createCalendar(date='04-12-2016.8:31',user_id=user1.id,timezone='AST')
+            cal2=createCalendar(date='04-12-2016.8:31',user_id=user2.id,timezone='AST')
         if mcel:
             return jsonify(mcel)
         return jsonify(message='Did not create cal or mcel?')
@@ -121,3 +121,4 @@ def get_data():
     data = response.json()
     return jsonify(data.amiibo)
     """
+
