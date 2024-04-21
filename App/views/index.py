@@ -21,14 +21,14 @@ def index_page():
         cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
             
             #return jsonify(cal2.get_json())
-        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=meal.id,calendar_integration_id=cal.id,date='04-12-2016.8:30')
+        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=meal.id,calendar_integration_id=cal.id,date='04-12-2016.8:30',time='allday')
         user2=create_user(username='jake', email='jake@example.com', password='jakepass',budget=300,gender='female',age=30,weight=200,height="1.564")
         if user2:
             meal2=createMeal(user2.id,5)
             cal2=createCalendar(date='04-12-2016.8:31',user_id=user2.id,timezone='AST')
             rout=createRoutine(user2.id, 'Legs Workout', 'I want toworkout my quadriceps', "['Milk', 'Fish']","['Endurance', 'Building Muscle']")
-            crcel=createRoutineCalendarEntry(date='04-12-2016.9:00',user_id=user2.id,routine_id=rout.id,calendar_integration_id=cal2.id)
-            mcel2=createMealCalendarEntry(user_id=user2.id,meal_id=meal2.id,calendar_integration_id=cal2.id,date='04-12-2016.10:30')
+            crcel=createRoutineCalendarEntry(date='04-12-2016.9:00',user_id=user2.id,routine_id=rout.id,calendar_integration_id=cal2.id,time='allday')
+            mcel2=createMealCalendarEntry(user_id=user2.id,meal_id=meal2.id,calendar_integration_id=cal2.id,date='04-12-2016.10:30',time='allday')
             return jsonify(crcel)
         return jsonify(message='Did not create cal or mcel?')
         #prefs="", fgoals=""
