@@ -5,6 +5,9 @@ from App.controllers import create_user,create_test_users, createRoutine,createM
 from App.controllers import login,loadExercises,loadFoods,list_foods,list_exercises,list_routines,get_user_routines
 index_views = Blueprint('index_views', __name__)
 
+
+#did not return json for meal and calendar to test functions, may have to do the same, or not for other controllers
+
 @index_views.route('/', methods=['GET'])
 def index_page():
     db.drop_all()
@@ -21,14 +24,14 @@ def index_page():
         cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
             
             #return jsonify(cal2.get_json())
-        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=meal.id,calendar_integration_id=cal.id,date='04-12-2016.8:30',time='allday')
+        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=1,calendar_integration_id=cal.id,date='04-12-2016.8:30',time='allday')
         user2=create_user(username='jake', email='jake@example.com', password='jakepass',budget=300,gender='female',age=30,weight=200,height="1.564")
         if user2:
             meal2=createMeal(user2.id,5)
             cal2=createCalendar(date='04-12-2016.8:31',user_id=user2.id,timezone='AST')
             rout=createRoutine(user2.id, 'Legs Workout', 'I want toworkout my quadriceps', "['Milk', 'Fish']","['Endurance', 'Building Muscle']")
             crcel=createRoutineCalendarEntry(date='04-12-2016.9:00',user_id=user2.id,routine_id=rout.id,calendar_integration_id=cal2.id,time='allday')
-            mcel2=createMealCalendarEntry(user_id=user2.id,meal_id=meal2.id,calendar_integration_id=cal2.id,date='04-12-2016.10:30',time='allday')
+            mcel2=createMealCalendarEntry(user_id=user2.id,meal_id=2,calendar_integration_id=cal2.id,date='04-12-2016.10:30',time='allday')
             return jsonify(crcel)
         return jsonify(message='Did not create cal or mcel?')
         #prefs="", fgoals=""
@@ -112,6 +115,7 @@ def meal_calendars():
     mealcals=getAllMealCalendars()
     #mealcal=getMealCalendarEntryForUser(user_id=1, date='04-12-2016.8:30',calendar_id=1)
     return jsonify(mealcals)
+
 
 @index_views.route('/routinecalendars', methods=['GET'])
 def routine_calendars():
