@@ -1,3 +1,41 @@
+def review_book(self, book_id, rating, reviewtext):
+        from App.models import Book
+        from App.controllers import create_review
+        book = Book.query.get(book_id)
+        if book:
+            try:
+                
+                review = create_review(self.id, book_id, rating, reviewtext)
+                return review
+            except Exception as e:
+                print(e)
+                db.session.rollback()
+                return None
+        return None
+
+    def delete_review(self, review_id):
+        from App.models import Review
+        review = Review.query.get(review_id)
+        if review.user == self:
+            db.session.delete(review)
+            db.session.commit()
+            return True
+        return None
+
+    def update_review(self, review_id, reviewtext, rating):
+        from App.models import Review
+        review = Review.query.get(review_id)
+        if review.user == self:
+            review.reviewtext = reviewtext
+            review.rating = rating
+            db.session.add(review)
+            db.session.commit()
+            return True
+        return None
+
+
+
+
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 db = SQLAlchemy()
@@ -119,3 +157,72 @@ class Pokemon(db.Model):
      'type2': self.type2,
      'weight': self.weight
    }
+from App.database import db
+class Book(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(255), nullable=False)
+  author = db.Column(db.String(255),nullable=False)
+  cover = db.Column(db.String(255),nullable=False)
+  publisher = db.Column(db.String(255),nullable=False)
+  reviews_count = db.Column(db.Integer, default=0)
+
+  reviews = db.relationship('Review', backref='book', lazy=True)
+  
+  def __init__(self, name, author, publisher, cover):
+    self.name = name
+    self.author = author
+    self.publisher = publisher
+    self.cover = cover
+    self.reviews_count=0
+    
+  def __repr__(self):
+      return f'<Book {self.id} : {self.name} author {self.author} publisher {self.publisher}>'
+    
+  def get_json(self):
+    return {
+      'id': self.id,
+      'name': self.name,
+      'author': self.author,
+      'publisher': self.publisher,
+      'cover' : self.cover,
+      'reviews_count': self.reviews_count,
+  }
+  from App.database import db
+class Review(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+  book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
+
+  review = db.relationship('Book')
+  
+  reviewtext = db.Column(db.String(255))
+  rating=db.Column((db.Integer), nullable=False)
+  
+  def __init__(self, user_id, book_id, rating, reviewtext):
+    self.user_id = user_id
+    self.book_id = book_id
+    self.rating = rating
+    self.reviewtext = reviewtext
+  
+  def __repr__(self):
+      return f'<Review {self.id} : {self.reviewtext} book {self.book.name}>'
+  
+
+  def setReviewText(self,reviewtext):
+     self.reviewtext=reviewtext
+    
+  def setRating(self,rating):
+     self.rating=rating
+  
+  def get_json(self):
+    return{
+      'id': self.id,
+      'user_id': self.user.id,
+      'book_name': self.book.name,
+      'user_name':self.user.username,
+      #'book_id': self.book.id,
+      'rating': self.rating,
+      'reviewtext': self.reviewtext
+    }
+    
+ 

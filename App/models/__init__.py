@@ -1,6 +1,4 @@
 from .user import *
-from .book import *
-from .review import *
 from .fooditem import *
 from .exercise import *
 from .routine import *

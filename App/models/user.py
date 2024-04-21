@@ -10,7 +10,9 @@ class User(db.Model):
     age = db.Column(db.Integer, nullable=False)
     weight= db.Column(db.Integer, nullable=False)
     height= db.Column(db.String(100), nullable=False)
-    review = db.relationship('Review', backref='user',lazy=True)
+
+    #review = db.relationship('Review', backref='user',lazy=True)
+
     image=db.Column(db.String(25))
 
     budget=db.Column(db.Integer, nullable=False)
@@ -18,7 +20,6 @@ class User(db.Model):
     
     routines = db.relationship('Routine', backref='user', lazy=True)
     meals = db.relationship('Meal', backref='user', lazy=True)
-    #calendar_integrations = db.relationship('CalendarIntegration', backref='user', lazy=True)
     meal_calendars = db.relationship('MealCalendar', backref='user', lazy=True)
     calendar_integrations = db.relationship('CalendarIntegration', backref='user', lazy=True)
     def __init__(self, username,email, password, budget,gender, age, weight,height):
@@ -78,37 +79,4 @@ class User(db.Model):
         return self
         
     # to svoifd circular import issue on render, im importing it using a lazy import instead top of the file
-    def review_book(self, book_id, rating, reviewtext):
-        from App.models import Book
-        from App.controllers import create_review
-        book = Book.query.get(book_id)
-        if book:
-            try:
-                
-                review = create_review(self.id, book_id, rating, reviewtext)
-                return review
-            except Exception as e:
-                print(e)
-                db.session.rollback()
-                return None
-        return None
-
-    def delete_review(self, review_id):
-        from App.models import Review
-        review = Review.query.get(review_id)
-        if review.user == self:
-            db.session.delete(review)
-            db.session.commit()
-            return True
-        return None
-
-    def update_review(self, review_id, reviewtext, rating):
-        from App.models import Review
-        review = Review.query.get(review_id)
-        if review.user == self:
-            review.reviewtext = reviewtext
-            review.rating = rating
-            db.session.add(review)
-            db.session.commit()
-            return True
-        return None
+    

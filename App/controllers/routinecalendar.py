@@ -22,8 +22,8 @@ def getRoutineCalendarEntryForUser(user_id, date, calendar_id):
         return routines_list
         
 """
-def createRoutineCalendarEntry(date, user_id, routine_id, calendar_integration_id):
-    routine_calendar = RoutineCalendar(date=date, user_id=user_id, routine_id=routine_id, calendar_integration_id=calendar_integration_id)
+def createRoutineCalendarEntry(date, user_id, routine_id, calendar_integration_id,time):
+    routine_calendar = RoutineCalendar(date=date, user_id=user_id, routine_id=routine_id, calendar_integration_id=calendar_integration_id,time=time)
     try:
                 
                 db.session.add(routine_calendar)
@@ -34,7 +34,7 @@ def createRoutineCalendarEntry(date, user_id, routine_id, calendar_integration_i
                 print(e)
                 db.session.rollback()
                 return None
-   
+   #create time specific get for routineentry, right now we fetch day alone, change this query to .all()
 def getRoutineCalendarEntryForUser(user_id, date, calendar_id):
         routine=RoutineCalendar.query.filter_by(user_id=user_id,date=date,calendar_integration_id=calendar_id).first()
         if not routine:
@@ -43,6 +43,13 @@ def getRoutineCalendarEntryForUser(user_id, date, calendar_id):
         #return jsonify(meal)
         return routine.get_json()
         
+
+def getRoutineCalendarByTime(user_id,date,calendar_id,time):
+        rc=RoutineCalendar.query.filter_by(user_id=user_id,date=date,calendar_integration_id=calendar_id,time=time).first()
+        if not rc:
+                return None
+        return rc.get_json()
+
 def getAllRoutineCalendars():
         try:
                 routinecals = RoutineCalendar.query.all()
