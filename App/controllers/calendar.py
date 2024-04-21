@@ -27,7 +27,7 @@ def list_cals():
             
 def get_user_calendars(user_id):# changed all to first
     try:
-        calendars = CalendarIntegration.query.filter_by(user_id=user_id).all()
+        calendars = CalendarIntegration.query.filter_by(user_id=user_id).first()
         if not calendars:
             return []
         calendars_list = [calendar.get_json() for calendar in calendars]
