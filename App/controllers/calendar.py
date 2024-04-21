@@ -7,7 +7,7 @@ def createCalendar(date,user_id,timezone):
         db.session.add(calendar)
         db.session.commit()
         #cal=CalendarIntegration.query.filter_by(user_id=user_id).first()
-        return calendar
+        return calendar.get_json()
     except Exception as e:
         print(e)
         db.session.rollback()
