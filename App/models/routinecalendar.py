@@ -6,8 +6,9 @@ class RoutineCalendar(db.Model):
     routine_id = db.Column(db.Integer, db.ForeignKey('routine.id'))
     calendar_integration_id = db.Column(db.Integer, db.ForeignKey('calendar_integration.id'))
     routine = db.relationship('Routine', backref='routine_calendars', lazy=True)
-    def __init__(self, date, routine_id, calendar_integration_id):
+    def __init__(self, date, routine_id, calendar_integration_id,user_id):
         self.date = date
+        self.user_id=user_id
         self.routine_id = routine_id
         self.calendar_integration_id = calendar_integration_id
 
@@ -17,6 +18,7 @@ class RoutineCalendar(db.Model):
             'date': self.date,
             'routine_id': self.routine_id,
             'calendar_integration_id': self.calendar_integration_id,
+            'user_id':self.user_id,
             'routine': self.routine.get_json()
         }
 
