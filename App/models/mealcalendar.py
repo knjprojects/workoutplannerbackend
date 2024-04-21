@@ -2,9 +2,10 @@ from App.database import db
 class MealCalendar(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.String(200),nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     calendar_integration_id = db.Column(db.Integer, db.ForeignKey('calendar_integration.id'), nullable=False)
     meal_id = db.Column(db.Integer, db.ForeignKey('meal.id'), nullable=False)
+
     meal = db.relationship('Meal', backref='meal_calendars', lazy=True)
     #calendar_integration = db.relationship('CalendarIntegration', backref='meal_calendars', lazy=True)
     integration = db.relationship('CalendarIntegration', backref='meal_calendars', lazy=True)
