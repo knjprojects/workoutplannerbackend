@@ -20,6 +20,6 @@ def getMealCalendarEntryForUser(user_id, date, calendar_id):
         if not meal:
                 return None
         #meals_list=[meal.get_json for meal in meals]
-        return jsonify(meal)
+        #return jsonify(meal)
         return meal.get_json()
         

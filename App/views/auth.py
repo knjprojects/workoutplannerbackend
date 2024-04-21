@@ -29,21 +29,12 @@ def login_action():
     try:
         data = request.form
         token = login(data['username'], data['password'])
-        """response = redirect(url_for('index_views.index_page'))#redirect(request.referrer)
-        if not token:
-            flash('Bad username or password given'), 401
-        else:
-            flash('Login Successful')
-            set_access_cookies(response, token) 
-        return response"""
         if not token: 
             return jsonify({})
         user=get_user_by_username(data['username'])
         if user is None:
             return jsonify({}), 404
         return jsonify(user)
-        #return redirect('https://workoutplanner-fy14tct1t-joshthereactdevgmailcoms-projects.vercel.app/dashboard', code=307)
-        #return redirect('http://localhost:3000/dashboard', code=307)
     except KeyError as e:
         return jsonify(error=str(e)), 400
 
@@ -71,24 +62,12 @@ def signup_action():
     if user is None:
         return jsonify({}), 404
     return jsonify(user)
-        #return redirect('https://workoutplanner-fy14tct1t-joshthereactdevgmailcoms-projects.vercel.app/dashboard', code=307)
-        #return redirect('http://localhost:3000/dashboard', code=307)
   except KeyError as e:
     return jsonify(error=str(e)), 400
 
   except Exception as e:
     return jsonify(error=str(e)), 500
 
-  """if token:
-    response=redirect(url_for('book_views.get_book_page'))
-    set_access_cookies(response, token)
-    flash('Account Created!')  # send message
-  else : 
-     
-     response = redirect(url_for('index_views.index_page'))
-     flash("username or email already exists") 
-  return response"""
-  
 '''
 API Routes
 '''
