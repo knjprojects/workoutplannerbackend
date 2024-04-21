@@ -36,7 +36,7 @@ def createRoutineCalendarEntry(date, user_id, routine_id, calendar_integration_i
                 return None
    #create time specific get for routineentry, right now we fetch day alone, change this query to .all()
 def getRoutineCalendarEntryForUser(user_id, date, calendar_id):
-        routine=RoutineCalendar.query.filter_by(user_id=user_id,date=date,calendar_integration_id=calendar_id).first()
+        routine=RoutineCalendar.query.filter_by(user_id=user_id,date=date,calendar_integration_id=calendar_id).all()
         if not routine:
                 return None
         #meals_list=[meal.get_json for meal in meals]
