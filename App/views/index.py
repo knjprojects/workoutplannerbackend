@@ -1,7 +1,7 @@
 import csv
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.database import db
-from App.controllers import create_user,create_test_users, createRoutine,createMeal,getMeals,mealsForUser,getFoodById,createCalendar,get_user_calendars,createMealCalendarEntry, getMealCalendarEntryForUser,createRoutineCalendarEntry,list_cals,removeMeal
+from App.controllers import create_user,create_test_users, createRoutine,createMeal,getMeals,mealsForUser,getFoodById,createCalendar,get_user_calendars,createMealCalendarEntry, getMealCalendarEntryForUser,createRoutineCalendarEntry,list_cals,removeMeal,getAllMealCalendars
 from App.controllers import login, create_book, create_review,loadExercises,loadFoods,list_foods,list_exercises,list_routines,get_user_routines
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
@@ -19,10 +19,12 @@ def index_page():
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         meal=createMeal(user1.id,1)
         cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
-        if cal:
-            cal2=createCalendar(date='04-12-2016.8:31',user_id=user1.id,timezone='AST')
+            
             #return jsonify(cal2.get_json())
         mcel=createMealCalendarEntry(user_id=user1.id,meal_id=meal.id,calendar_integration_id=cal.id,date='04-12-2016.8:30')
+        user2=create_user(username='jake', email='jake@example.com', password='jakepass',budget=300,gender='female',age=30,weight=200,height="1.564")
+        if user2:
+            cal2=createCalendar(date='04-12-2016.8:31',user_id=user1.id,timezone='AST')
         if mcel:
             return jsonify(mcel)
         return jsonify(message='Did not create cal or mcel?')
@@ -104,7 +106,8 @@ def user_calendars(user_id):
 
 @index_views.route('/mealcalendars', methods=['GET'])
 def meal_calendars():
-    mealcal=getMealCalendarEntryForUser(user_id=1, date='04-12-2016.8:30',calendar_id=1)
+    mealcal=getAllMealCalendars()
+    #mealcal=getMealCalendarEntryForUser(user_id=1, date='04-12-2016.8:30',calendar_id=1)
     return jsonify(mealcal)
 
 

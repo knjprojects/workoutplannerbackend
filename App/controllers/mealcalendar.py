@@ -23,3 +23,13 @@ def getMealCalendarEntryForUser(user_id, date, calendar_id):
         #return jsonify(meal)
         return meal.get_json()
         
+def getAllMealCalendars():
+        try:
+                mealcals = MealCalendar.query.all()
+                if not mealcals:
+                        return []
+                mealcals_list = [calendar.get_json() for calendar in mealcals]
+                return mealcals_list
+        except Exception as e:
+        #logging.error(f"Error occurred in list_cals: {e}")
+                return []
