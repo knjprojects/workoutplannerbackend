@@ -31,7 +31,7 @@ def get_user_calendars(user_id):# changed all to first
         if not calendars:
             return []
         #calendars_list = [calendar.get_json() for calendar in calendars]
-        return calendars
+        return calendars.get_json()
     except Exception as e:
         #logging.error(f"Error occurred in get_user_calendars for user_id {user_id}: {e}")
         return []
