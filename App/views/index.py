@@ -45,16 +45,24 @@ def init():
     
     user1=create_test_users()
     #create_book('The Hobbit', 'J.R.R. Tolkien', 'George Allen & Unwin','https://m.media-amazon.com/images/M/MV5BMzU0NDY0NDEzNV5BMl5BanBnXkFtZTgwOTIxNDU1MDE@._V1_FMjpg_UX1000_.jpg')
+    loadExercises()
+    loadFoods()
     if user1:
         #user1.review_book(1, 3,'A great book!')
         #userid=user1.id
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
-        createMeal(user1.id,1)
-        
-        
-        #prefs="", fgoals=""
-    loadExercises()
-    loadFoods()
+        meal=createMeal(user1.id,1)
+        cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
+            
+            #return jsonify(cal2.get_json())
+        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=1,calendar_integration_id=cal.id,date='04-12-2016.8:30',time='allday')
+        user2=create_user(username='jake', email='jake@example.com', password='jakepass',budget=300,gender='female',age=30,weight=200,height="1.564")
+        if user2:
+            meal2=createMeal(user2.id,5)
+            cal2=createCalendar(date='04-12-2016.8:31',user_id=user2.id,timezone='AST')
+            rout=createRoutine(user2.id, 'Legs Workout', 'I want toworkout my quadriceps', "['Milk', 'Fish']","['Endurance', 'Building Muscle']")
+            crcel=createRoutineCalendarEntry(date='04-12-2016.9:00',user_id=user2.id,routine_id=rout.id,calendar_integration_id=cal2.id,time='allday')
+            mcel2=createMealCalendarEntry(user_id=user2.id,meal_id=2,calendar_integration_id=cal2.id,date='04-12-2016.10:30',time='allday')
     return jsonify(message='db initialized!')
 
 # list all exercises
