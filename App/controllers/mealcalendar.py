@@ -16,12 +16,12 @@ def createMealCalendarEntry(date, user_id, meal_id, calendar_integration_id,time
                 return None
 #add time specific, because we are fetching by date here, change the be;low query to .all|()
 def getMealCalendarEntryForUser(user_id, date, calendar_id):
-        meal=MealCalendar.query.filter_by(user_id=user_id,date=date,calendar_integration_id=calendar_id).all()
-        if not meal:
+        mealcals=MealCalendar.query.filter_by(user_id=user_id,date=date,calendar_integration_id=calendar_id).all()
+        if not mealcals:
                 return None
-        #meals_list=[meal.get_json for meal in meals]
-        #return jsonify(meal)
-        return meal.get_json()
+        mealcals_list=[meal.get_json for meal in mealcals]
+        return mealcals_list
+        
 
 
 def getMealCalendarByTime(user_id,date,calendar_id,time):

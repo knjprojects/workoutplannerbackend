@@ -1,7 +1,7 @@
 import csv
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.database import db
-from App.controllers import create_user,create_test_users, createRoutine,createMeal,getMeals,mealsForUser,getFoodById,createCalendar,get_user_calendars,createMealCalendarEntry, getMealCalendarEntryForUser,createRoutineCalendarEntry,list_cals,removeMeal,getAllMealCalendars,getAllRoutineCalendars
+from App.controllers import create_user,create_test_users, createRoutine,createMeal,getMeals,mealsForUser,getFoodById,createCalendar,get_user_calendars,createMealCalendarEntry, getMealCalendarEntryForUser,createRoutineCalendarEntry,list_cals,removeMeal,getAllMealCalendars,getAllRoutineCalendars,addExerciseToRoutine
 from App.controllers import login,loadExercises,loadFoods,list_foods,list_exercises,list_routines,get_user_routines
 index_views = Blueprint('index_views', __name__)
 
@@ -21,22 +21,30 @@ def index_page():
         #userid=user1.id
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         meal=createMeal(user1.id,1)
-        cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
+        cal=createCalendar(date='04-12-2016',user_id=user1.id,timezone='AST')
             
             #return jsonify(cal2.get_json())
-        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=1,calendar_integration_id=cal.id,date='04-12-2016.8:30',time='allday')
+        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=1,calendar_integration_id=cal.id,date='04-12-2016',time='allday')
         user2=create_user(username='jake', email='jake@example.com', password='jakepass',budget=300,gender='female',age=30,weight=200,height="1.564")
         if user2:
             meal2=createMeal(user2.id,5)
-            cal2=createCalendar(date='04-12-2016.8:31',user_id=user2.id,timezone='AST')
+            cal2=createCalendar(date='04-12-2016',user_id=user2.id,timezone='AST')
             rout=createRoutine(user2.id, 'Legs Workout', 'I want toworkout my quadriceps', "['Milk', 'Fish']","['Endurance', 'Building Muscle']")
-            crcel=createRoutineCalendarEntry(date='04-12-2016.9:00',user_id=user2.id,routine_id=rout.id,calendar_integration_id=cal2.id,time='allday')
-            mcel2=createMealCalendarEntry(user_id=user2.id,meal_id=2,calendar_integration_id=cal2.id,date='04-12-2016.10:30',time='allday')
+            crcel=createRoutineCalendarEntry(date='04-12-2016',user_id=user2.id,routine_id=rout.id,calendar_integration_id=cal2.id,time='allday')
+            mcel2=createMealCalendarEntry(user_id=user2.id,meal_id=2,calendar_integration_id=cal2.id,date='04-12-2016',time='allday')
             return jsonify(crcel)
         return jsonify(message='Did not create cal or mcel?')
         #prefs="", fgoals=""
     
     #return render_template('index.html')
+
+
+def createWorkDay(date,time,rout,meal,user_id,cal):
+    createRoutineCalendarEntry(date=date,user_id=user_id,routine_id=rout,calendar_integration_id=cal,time=time)
+    tried=createMealCalendarEntry(user_id=user_id,meal_id=meal,calendar_integration_id=cal,date=date,time=time)
+    if tried:
+        return True
+    return None
 
 @index_views.route('/init', methods=['GET'])
 def init():
@@ -52,17 +60,17 @@ def init():
         #userid=user1.id
         createRoutine(user1.id, 'Abs Workout', 'I want to build abs', "['Meat', 'Veggies']","['Weight Loss', 'Building Muscle']")
         meal=createMeal(user1.id,1)
-        cal=createCalendar(date='04-12-2016.8:30',user_id=user1.id,timezone='AST')
+        cal=createCalendar(date='04-12-2016',user_id=user1.id,timezone='AST')
             
             #return jsonify(cal2.get_json())
-        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=1,calendar_integration_id=cal.id,date='04-12-2016.8:30',time='allday')
+        mcel=createMealCalendarEntry(user_id=user1.id,meal_id=1,calendar_integration_id=cal.id,date='04-12-2016',time='allday')
         user2=create_user(username='jake', email='jake@example.com', password='jakepass',budget=300,gender='female',age=30,weight=200,height="1.564")
         if user2:
             meal2=createMeal(user2.id,5)
-            cal2=createCalendar(date='04-12-2016.8:31',user_id=user2.id,timezone='AST')
+            cal2=createCalendar(date='04-12-2016',user_id=user2.id,timezone='AST')
             rout=createRoutine(user2.id, 'Legs Workout', 'I want toworkout my quadriceps', "['Milk', 'Fish']","['Endurance', 'Building Muscle']")
-            crcel=createRoutineCalendarEntry(date='04-12-2016.9:00',user_id=user2.id,routine_id=rout.id,calendar_integration_id=cal2.id,time='allday')
-            mcel2=createMealCalendarEntry(user_id=user2.id,meal_id=2,calendar_integration_id=cal2.id,date='04-12-2016.10:30',time='allday')
+            crcel=createRoutineCalendarEntry(date='04-12-2016',user_id=user2.id,routine_id=rout.id,calendar_integration_id=cal2.id,time='allday')
+            mcel2=createMealCalendarEntry(user_id=user2.id,meal_id=2,calendar_integration_id=cal2.id,date='04-12-2016',time='allday')
     return jsonify(message='db initialized!')
 
 # list all exercises
@@ -130,7 +138,22 @@ def routine_calendars():
     routinecal=getAllRoutineCalendars()
     return jsonify(routinecal)
 
+@index_views.route('/calendars/createMealandRout', methods=['POST'])
+def createWorkDay():
+    data=request.form
+    #date: date,time: time,rout:rout,meal:meal
+    workday=createWorkDay(user_id=data['user_id'],date=data['date'],time=data['time'],rout=data['rout'],meal=data['meal'],cal=data['cal'])
+    if workday:
+        return jsonify(message="Done")
+    return jsonify(message="Fail")
 
+@index_views.route('/addExerciseToRoutine', methods=['POST'])
+def createExerciseRoutine():
+    data=request.form
+    ex=addExerciseToRoutine(routine_id=data['rout'],exercise_id=data['exer'])
+    if ex:
+        return jsonify(ex)
+    return jsonify(message="Fail")
 
 
 @index_views.route('/health', methods=['GET'])

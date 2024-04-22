@@ -21,7 +21,7 @@ def addExerciseToRoutine(routine_id,exercise_id):
                 routineexercise=ExerciseRoutine(routine_id=routine_id, exercise_id=exercise_id)
                 db.session.add(routineexercise)
                 db.session.commit()
-                return routineexercise
+                return routineexercise.get_json()
         except Exception as e:
                 print(e)
                 db.session.rollback()
