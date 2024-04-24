@@ -4,7 +4,7 @@ class CalendarIntegration(db.Model):
     date = db.Column(db.String(200))
     routines = db.relationship('RoutineCalendar', backref='calendar_integration', lazy=True)
     #meals = db.relationship('MealCalendar', backref='calendar_integration', lazy=True)
-    meals = db.relationship('MealCalendar', backref='calendar_integration', lazy=True)
+    meals = db.relationship('MealCalendar', backref='calendar_integration', back_populates="integration",lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     timezone=db.Column(db.String(100), nullable=False)
     def __init__(self, date, user_id, timezone):
