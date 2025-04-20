@@ -1,7 +1,7 @@
 from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
 
-class User(db.Model):
+"""class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username =  db.Column(db.String, nullable=False, unique=True)
     email =  db.Column(db.String, nullable=False, unique=True)
@@ -52,11 +52,11 @@ class User(db.Model):
         }
 
     def set_password(self, password):
-        """Create hashed password."""
+       
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
-        """Check hashed password."""
+       
         return check_password_hash(self.password, password)
 
     def update_user_basic(self, username,email,image):
@@ -79,4 +79,41 @@ class User(db.Model):
         return self
         
     # to svoifd circular import issue on render, im importing it using a lazy import instead top of the file
-    
+    """
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    recipes = db.relationship('Recipe', backref='author', lazy=True)
+    password_hash = db.Column(db.String(128))
+    ingredients = db.Column(db.Text, nullable=True)  # Comma-separated list of ingredient names
+    comments = db.relationship('Comment', backref='author', lazy=True)
+
+    def add_recipe(self, recipe):
+        self.recipes.append(recipe)
+
+    def remove_recipe(self, recipe):
+        self.recipes.remove(recipe)
+
+    def find_recipes(self):
+        """Find recipes that can be made with the user's ingredients."""
+        if not self.ingredients:
+            return []
+        user_ingredients = set(self.ingredients.split(','))
+        return Recipe.query.filter(
+            Recipe.ingredients.any(Ingredient.name.in_(user_ingredients))
+        ).all()
+
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.password_hash = generate_password_hash(password)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
